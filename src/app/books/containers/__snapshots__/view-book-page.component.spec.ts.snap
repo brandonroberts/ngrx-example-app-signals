@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View Book Page should compile 1`] = `
+<bc-view-book-page
+  actionsSubscription={[Function SafeSubscriber]}
+>
+  <bc-selected-book-page>
+    <bc-book-detail>
+    </bc-book-detail>
+  </bc-selected-book-page>
+</bc-view-book-page>
+`;

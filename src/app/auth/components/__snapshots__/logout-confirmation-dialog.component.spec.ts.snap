@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logout Confirmation Dialog should compile 1`] = `
+<ng-component>
+  <h2
+    class="mat-mdc-dialog-title mdc-dialog__title"
+    mat-dialog-title=""
+  >
+    Logout
+  </h2><mat-dialog-content
+    class="mat-mdc-dialog-content mdc-dialog__content"
+  >
+    Are you sure you want to logout?
+  </mat-dialog-content><mat-dialog-actions
+    class="mat-mdc-dialog-actions mdc-dialog__actions"
+  >
+    <button
+      class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
+      mat-button=""
+      mat-button-is-fab="false"
+      mat-button-ripple-uninitialized=""
+      type="button"
+    >
+      <span
+        class="mat-mdc-button-persistent-ripple mdc-button__ripple"
+      />
+      <span
+        class="mdc-button__label"
+      >
+        Cancel
+      </span>
+      <span
+        class="mat-mdc-focus-indicator"
+      />
+      <span
+        class="mat-mdc-button-touch-target"
+      />
+    </button>
+    <button
+      class="mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base"
+      mat-button=""
+      mat-button-is-fab="false"
+      mat-button-ripple-uninitialized=""
+      type="button"
+    >
+      <span
+        class="mat-mdc-button-persistent-ripple mdc-button__ripple"
+      />
+      <span
+        class="mdc-button__label"
+      >
+        OK
+      </span>
+      <span
+        class="mat-mdc-focus-indicator"
+      />
+      <span
+        class="mat-mdc-button-touch-target"
+      />
+    </button>
+  </mat-dialog-actions>
+</ng-component>
+`;
