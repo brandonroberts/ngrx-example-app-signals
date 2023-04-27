@@ -1,28 +1,30 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Credentials } from '@example-app/auth/models';
-import * as fromAuth from '@example-app/auth/reducers';
-import { LoginPageActions } from '@example-app/auth/actions';
+
+import { LoginPageStore } from './login-page.store';
 
 @Component({
   selector: 'bc-login-page',
   template: `
     <bc-login-form
       (submitted)="onSubmit($event)"
-      [pending]="(pending$ | async)!"
-      [errorMessage]="error$ | async"
+      [pending]="pending()"
+      [errorMessage]="error()"
     >
     </bc-login-form>
   `,
   styles: [],
+  providers: [
+    LoginPageStore
+  ]
 })
 export class LoginPageComponent {
-  pending$ = this.store.select(fromAuth.selectLoginPagePending);
-  error$ = this.store.select(fromAuth.selectLoginPageError);
+  pending = this.store.pending;
+  error = this.store.error;
 
-  constructor(private store: Store) {}
+  constructor(private store: LoginPageStore) {}
 
   onSubmit(credentials: Credentials) {
-    this.store.dispatch(LoginPageActions.login({ credentials }));
+    this.store.login(credentials);
   }
 }
