@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import { AuthActions } from '@example-app/auth/actions';
 import * as fromAuth from '@example-app/auth/reducers';
@@ -12,10 +11,10 @@ import { LayoutActions } from '@example-app/core/actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <bc-layout>
-      <bc-sidenav [open]="(showSidenav$ | async)!" (closeMenu)="closeSidenav()">
+      <bc-sidenav [open]="showSidenav()" (closeMenu)="closeSidenav()">
         <bc-nav-item
           (navigate)="closeSidenav()"
-          *ngIf="loggedIn$ | async"
+          *ngIf="loggedIn()"
           routerLink="/"
           icon="book"
           hint="View your book collection"
@@ -24,7 +23,7 @@ import { LayoutActions } from '@example-app/core/actions';
         </bc-nav-item>
         <bc-nav-item
           (navigate)="closeSidenav()"
-          *ngIf="loggedIn$ | async"
+          *ngIf="loggedIn()"
           routerLink="/books/find"
           icon="search"
           hint="Find your next book!"
@@ -33,11 +32,11 @@ import { LayoutActions } from '@example-app/core/actions';
         </bc-nav-item>
         <bc-nav-item
           (navigate)="closeSidenav()"
-          *ngIf="(loggedIn$ | async) === false"
+          *ngIf="loggedIn() === false"
         >
           Sign In
         </bc-nav-item>
-        <bc-nav-item (navigate)="logout()" *ngIf="loggedIn$ | async">
+        <bc-nav-item (navigate)="logout()" *ngIf="loggedIn()">
           Sign Out
         </bc-nav-item>
       </bc-sidenav>
@@ -48,17 +47,10 @@ import { LayoutActions } from '@example-app/core/actions';
   `,
 })
 export class AppComponent {
-  showSidenav$: Observable<boolean>;
-  loggedIn$: Observable<boolean>;
+  showSidenav = this.store.selectSignal(fromRoot.selectShowSidenav);
+  loggedIn = this.store.selectSignal(fromAuth.selectLoggedIn);
 
-  constructor(private store: Store) {
-    /**
-     * Selectors can be applied with the `select` operator which passes the state
-     * tree to the provided selector
-     */
-    this.showSidenav$ = this.store.select(fromRoot.selectShowSidenav);
-    this.loggedIn$ = this.store.select(fromAuth.selectLoggedIn);
-  }
+  constructor(private store: Store) {}
 
   closeSidenav() {
     /**

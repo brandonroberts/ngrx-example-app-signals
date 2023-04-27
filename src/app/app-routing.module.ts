@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {
+  Routes,
+  RouterModule,
+  withComponentInputBinding,
+  provideRouter,
+  withHashLocation,
+} from '@angular/router';
 
 import { authGuard } from '@example-app/auth/services';
 import { NotFoundPageComponent } from '@example-app/core/containers';
@@ -20,11 +26,9 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      useHash: true,
-    }),
-  ],
   exports: [RouterModule],
+  providers: [
+    provideRouter(routes, withComponentInputBinding(), withHashLocation()),
+  ],
 })
 export class AppRoutingModule {}

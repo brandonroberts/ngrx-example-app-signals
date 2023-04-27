@@ -1,7 +1,13 @@
-import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  effect,
+  Signal,
+  Input as RouteInput
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ViewBookPageActions } from '@example-app/books/actions';
@@ -21,16 +27,20 @@ import { ViewBookPageActions } from '@example-app/books/actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ` <bc-selected-book-page></bc-selected-book-page> `,
 })
-export class ViewBookPageComponent implements OnDestroy {
-  actionsSubscription: Subscription;
-
-  constructor(store: Store, route: ActivatedRoute) {
-    this.actionsSubscription = route.params
-      .pipe(map((params) => ViewBookPageActions.selectBook({ id: params['id'] })))
-      .subscribe((action) => store.dispatch(action));
+export class ViewBookPageComponent {
+  // id: Signal<string | null | undefined> = toSignal(
+  //   this.route.paramMap.pipe(map((params) => params.get('id')))
+  // );
+  @RouteInput('id') set bookId(id: string) {
+    const action = ViewBookPageActions.selectBook({ id });
+    this.store.dispatch(action);
   }
 
-  ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
+  constructor(private store: Store, private route: ActivatedRoute) {
+    // effect(() => {
+    //   const id = this.id() as string;
+    //   const action = ViewBookPageActions.selectBook({ id });
+    //   this.store.dispatch(action);
+    // }, { allowSignalWrites: true });
   }
 }

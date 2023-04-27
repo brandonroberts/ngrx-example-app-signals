@@ -77,5 +77,8 @@ import { AppComponent } from '@example-app/core/containers';
     CoreModule,
   ],
   bootstrap: [AppComponent],
+  providers: [
+    
+  ]
 })
 export class AppModule {}
